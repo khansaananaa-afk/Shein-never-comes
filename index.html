@@ -37,7 +37,23 @@ h2.t{display:flex;justify-content:space-between;align-items:center;margin:16px 1
 .msg{background:#171717;color:var(--p);border-radius:10px;padding:14px;font-weight:700;margin:10px 12px}
 footer{background:#171717;color:#bbb;padding:18px 12px;font-size:.8rem;margin-top:24px;text-align:center}
 #toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#171717;color:#fff;border:1px solid var(--p);padding:10px 16px;border-radius:8px;display:none;z-index:9;max-width:90%}
-</style></head><body><div id="top"></div><div id="app"></div><footer id="ft"></footer><div id="toast"></div>
+
+.hd{background:var(--bg);border:0;padding:10px 12px 6px}.lg{background:none;color:var(--fg);padding:0;font-size:1.25rem;letter-spacing:-.5px}.lg i{color:#e8457c}
+.sr input{border:2px solid #171717;background:var(--bg)}.sr button{background:#171717;color:#fff}
+.ic button{background:none;border:0;font-size:1.15rem;padding:6px}
+.nav{display:flex;gap:18px;overflow-x:auto;padding:0 12px;border-bottom:1px solid var(--ln);white-space:nowrap}.nav a{padding:10px 0;cursor:pointer;font-weight:600;font-size:.88rem;border-bottom:3px solid transparent}.nav a.on{border-color:#171717}
+.hero{background:linear-gradient(120deg,#F7A8C4,#FCE4EC);color:#171717;text-align:start;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:26px 16px;overflow:hidden}
+.hero h1{color:#171717;margin:0 0 6px;font-size:clamp(1.7rem,6vw,3.2rem);line-height:1}.hero p{margin:4px 0 12px}.hero .btn{background:#171717;color:#fff}.hero b{font-size:1.1rem}
+.hero .arts{display:flex}.hero .arts svg{width:84px;height:84px;margin-inline-start:-14px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px;text-align:center}@media(min-width:700px){.cats{grid-template-columns:repeat(8,1fr)}}
+.cats a{font-size:.75rem;cursor:pointer}.cats span{display:flex;width:58px;height:58px;margin:0 auto 4px;border-radius:50%;background:var(--sp);align-items:center;justify-content:center;font-size:1.7rem}
+h2.fl{background:#171717;color:#fff;padding:10px 12px;margin:16px 0 8px}.fl small{color:#fff}.fl b{background:#e8457c;padding:2px 6px;border-radius:4px}
+.card{background:var(--bg);border:0;border-radius:4px}.im{position:relative;overflow:hidden}.im svg{width:78%;height:78%}.im.sm svg{width:80%;height:80%}
+.im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.cb{padding:6px 2px}.nm{font-weight:400;font-size:.8rem;min-height:2.4em;overflow:hidden}.pz{color:#e8457c;font-size:1rem}
+.bd,.bd.nw{background:#e8457c;color:#fff;border-radius:3px}.bd.nw{background:#171717}
+.bn{display:none;position:fixed;bottom:0;inset-inline:0;background:var(--bg);border-top:1px solid var(--ln);z-index:8;padding-bottom:env(safe-area-inset-bottom,0px)}.bn button{flex:1;border:0;background:none;padding:8px 0;font-size:.7rem;color:var(--fg)}.bn button span{display:block;font-size:1.25rem}
+@media(max-width:699px){.bn{display:flex}body{padding-bottom:64px}#toast{bottom:84px}}
+</style></head><body><div id="top"></div><div id="app"></div><footer id="ft"></footer><div id="toast"></div><nav class=bn id=bn></nav>
 <script>
 const $=s=>document.querySelector(s);
 const ld=(k,d)=>{try{const v=JSON.parse(localStorage.getItem('snc_'+k));return v==null?d:v}catch(e){return d}};
@@ -69,7 +85,7 @@ const SZ={0:['S','M','L','XL'],1:['S','M','L','XL'],2:['2Y','4Y','6Y','8Y'],3:['
 const rr=(a,b)=>{const v=Math.sin(a*12.9898+b*78.233)*43758.5453;return v-Math.floor(v)};
 const P=[];let n=0;
 C.forEach((c,ci)=>c.subs.forEach((s,si)=>{for(let i=0;i<14;i++){const r=k=>rr(n+1,k),c0=(i*3+(i>>3))%8,pr=Math.round(c[2]*(.6+r(1)*1.8))+.99,d=r(2)<.4?[10,20,30,40,50][Math.floor(r(3)*5)]:0;
-P.push({id:n,ci,si,st:i%7,col:[c0,(c0+2)%8,(c0+5)%8],price:pr,orig:d?Math.round(pr/(1-d/100))+.99:pr,d,rt:+(3.6+r(4)*1.4).toFixed(1),rc:20+Math.floor(r(5)*900),ok:r(6)>.07,nw:r(7)>.8,best:r(8)>.85,age:Math.floor(r(9)*90),sz:SZ[ci]||[]});n++}}));
+P.push({id:n,ci,si,st:i%7,col:[c0,(c0+2)%8,(c0+5)%8],price:pr,orig:d?Math.round(pr/(1-d/100))+.99:pr,d,rt:+(3.6+r(4)*1.4).toFixed(1),rc:20+Math.floor(r(5)*900),ok:r(6)>.07,nw:r(7)>.8,best:r(8)>.85,age:Math.floor(r(9)*90),sz:SZ[ci]||[],v:i});n++}}));
 const sub=p=>C[p.ci].subs[p.si],nm=p=>x(`${CL[p.col[0]][0]} ${ST[p.st][0]} ${sub(p).en}`,`${sub(p).ar} ${ST[p.st][1]} ${CL[p.col[0]][1]}`);
 const key=p=>p.k||(p.k=(CL[p.col[0]][0]+CL[p.col[0]][1]+ST[p.st][0]+ST[p.st][1]+sub(p).en+sub(p).ar+C[p.ci][0]+C[p.ci][1]).toLowerCase());
 const COUP={SNC10:[10,0],PINK20:[20,40],NEVER15:[15,25]};
@@ -85,15 +101,20 @@ const setLang=()=>{lang=lang=='ar'?'en':'ar';sv('lang',lang);render()};
 const sf=(k,v)=>{F[k]=v;F.n=24;render()};
 const tw=id=>{wish=wish.includes(id)?wish.filter(i=>i!=id):[id,...wish];sv('wish',wish);render()};
 const cq=()=>cart.reduce((a,l)=>a+l.q,0);
-const img=(p,k)=>`<div class=im style="background:${CL[k??p.col[0]][2]}55"><span>${sub(p).e}</span></div>`;
-const card=p=>`<div class=card onclick="go('p',${p.id})">${img(p)}<button class=hb aria-label="wishlist" onclick="event.stopPropagation();tw(${p.id})">${wish.includes(p.id)?'♥':'♡'}</button>${p.d?`<b class=bd>-${p.d}%</b>`:p.nw?`<b class="bd nw">${x('New','جديد')}</b>`:''}<div class=cb><div class=nm>${nm(p)}</div><div><b>${f(p.price)}</b> ${p.d?`<s>${f(p.orig)}</s>`:''}</div><small>★${p.rt}${p.ok?'':' · '+x('Sold out','نفذ')}</small></div></div>`;
+const SH=[['d','t','p','c','t'],['t','t','p','c','t'],['t','t','d','s','e'],['s','s','b','s','h'],['g','k','g','g','g']];
+const PT={d:'M38 10L46 10L50 22L54 10L62 10L60 38L72 90L28 90L40 38Z',t:'M30 14L42 10Q50 22 58 10L70 14L86 34L74 42L68 34L68 88L32 88L32 34L26 42L14 34Z',c:'M28 12L42 8Q50 20 58 8L72 12L90 36L78 46L70 38L72 92L28 92L30 38L22 46L10 36Z',p:'M32 10H68L74 92H56L50 40L44 92H26Z',s:'M8 62Q8 42 28 46L44 54Q60 50 72 56Q92 60 92 74V80H8Z',b:'M30 8H54V48L84 60V82H24Z',h:'M10 44Q40 54 56 70L86 62L90 72L60 84Q28 82 10 66Z',g:'M22 36H78L84 90H16Z',k:'M26 24H74V90H26Z'};
+const DT={d:'M40 38H60',t:'M42 10Q50 22 58 10',c:'M50 20V92',p:'M50 40V10',s:'M30 60L56 58',b:'M30 30H54',h:'M30 56L52 66',g:'M36 36Q36 14 50 14Q64 14 64 36',k:'M38 24V12H62V24'};
+const svgArt=(sh,hex)=>`<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${PT[sh]}" fill="${hex}" stroke="#0005" stroke-width="1.5" stroke-linejoin="round"/><path d="${DT[sh]}" fill="none" stroke="#0004" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+const shp=p=>(SH[p.ci]||[])[p.si],art=(p,k)=>{k=k??p.col[0];const s=shp(p);return s&&s!='e'?svgArt(s,CL[k][2]):`<span>${sub(p).e}</span>`};
+const img=(p,k)=>{k=k??p.col[0];const s=shp(p),bg=s&&s!='e'?'var(--g)':CL[k][2]+'55';return `<div class=im style="background:${bg}">${art(p,k)}<img loading=lazy alt="" src="images/${p.id}.jpg" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='images/${p.ci}-${p.si}.jpg'}else this.remove()"></div>`};
+const card=p=>`<div class=card onclick="go('p',${p.id})">${img(p)}<button class=hb aria-label="wishlist" onclick="event.stopPropagation();tw(${p.id})">${wish.includes(p.id)?'♥':'♡'}</button>${p.d?`<b class=bd>-${p.d}%</b>`:p.nw?`<b class="bd nw">${x('New','جديد')}</b>`:''}<div class=cb><div class=nm>${nm(p)}</div><div><b class=pz>${f(p.price)}</b> ${p.d?`<s>${f(p.orig)}</s>`:''}</div><small>★${p.rt}${p.ok?'':' · '+x('Sold out','نفذ')}</small></div></div>`;
 const grid=a=>a.length?`<div class=grid>${a.map(card).join('')}</div>`:`<p class=pad>${x('Nothing here yet.','لا يوجد شيء بعد.')}</p>`;
-const sec=(t,a,extra='')=>`<h2 class=t><span>${t}</span>${extra}</h2>${grid(a)}`;
+const sec=(t,a,extra='')=>`<h2 class="t${extra?' fl':''}"><span>${t}</span>${extra}</h2>${grid(a)}`;
 const end=()=>{const d=new Date();d.setHours(24,0,0,0);return +d};
 function vHome(){const day=Math.floor(Date.now()/864e5),dd=P.filter(p=>p.d&&p.ok),dl=[0,1,2,3].map(i=>dd[(day*7+i*131)%dd.length]);
-return `<section class=hero><h1>SHEIN NEVER COMES</h1><p>${x('SHOP EVERYTHING. EXPECT NOTHING.','تسوّق كل شيء. توقّع لا شيء.')}</p><button class=btn onclick="F=F0();go('list')">${x('Shop now','تسوّق الآن')}</button></section>
+return `<section class=hero><div><h1>SHEIN NEVER COMES</h1><p>${x('SHOP EVERYTHING. EXPECT NOTHING.','تسوّق كل شيء. توقّع لا شيء.')}</p><p><b>${x('UP TO 50% OFF','خصم حتى 50%')}</b></p><button class=btn onclick="F=F0();go('list')">${x('Shop now','تسوّق الآن')}</button></div><div class=arts>${svgArt('d','#ffffff')}${svgArt('g','#171717')}${svgArt('s','#c8323c')}</div></section>
 <p class=disc>⚠️ ${x('Fictional project: no real payments, no real shipping, not affiliated with SHEIN. Orders and tracking are simulated for fun.','مشروع خيالي: لا دفع حقيقي ولا شحن حقيقي ولا أي ارتباط بـ SHEIN. الطلبات والتتبع محاكاة للمتعة فقط.')}</p>
-<div class=chips>${C.map((c,i)=>`<a onclick="catgo(${i})">${c.subs[0].e} ${x(c[0],c[1])}</a>`).join('')}</div>
+<div class=cats>${C.map((c,i)=>`<a onclick="catgo(${i})"><span>${c.subs[0].e}</span>${x(c[0],c[1])}</a>`).join('')}</div>
 ${sec('⚡ '+x('Flash Sale','عرض الفلاش'),P.filter(p=>p.d>=40&&p.ok).slice(0,8),`<small>${x('Ends in','ينتهي خلال')} <b id=cd></b></small>`)}
 ${sec('🎯 '+x('Daily Deals','عروض اليوم'),dl)}
 <div class=box>🎟️ ${x('Coupons: SNC10 (10%), NEVER15 (15% over $25), PINK20 (20% over $40)','كوبونات: SNC10 (خصم 10%)، NEVER15 (15% فوق 25$)، PINK20 (20% فوق 40$)')}</div>
@@ -119,13 +140,13 @@ ${F.q?`<button class=btn onclick="F.q='';render()">✕ ${F.q}</button>`:''}</det
 ${a.length?grid(sh):`<div class=box>😕 ${x('No matching products. Try other words or clear filters.','لا توجد نتائج. جرّب كلمات أخرى أو امسح الفلاتر.')}<br><br><button class=btn onclick="F=F0();render()">${x('Clear all','مسح الكل')}</button></div>`}
 ${a.length>F.n?`<p style="text-align:center"><button class=btn onclick="F.n+=24;render()">${x('Load more','عرض المزيد')}</button></p>`:''}`}
 function vProd(){const p=P[arg],rel=P.filter(q=>q.ci==p.ci&&q.si==p.si&&q.id!=p.id).slice(0,4),rv=rec.filter(i=>i!=p.id).slice(0,4).map(i=>P[i]);
-return `<div class=pg><div>${img(p,S.col).replace('class=im','class="im big"')}<div class=th>${p.col.map(k=>`<div class="im sm${k==S.col?' on':''}" style="background:${CL[k][2]}55" onclick="S.col=${k};render()"><span>${sub(p).e}</span></div>`).join('')}</div></div>
+return `<div class=pg><div>${img(p,S.col).replace('class=im','class="im big"')}<div class=th>${p.col.map(k=>`<div class="im sm${k==S.col?' on':''}" style="background:var(--g)" onclick="S.col=${k};render()">${art(p,k)}</div>`).join('')}</div></div>
 <div><h2>${nm(p)}</h2><p><b style="font-size:1.4rem">${f(p.price)}</b> ${p.d?`<s>${f(p.orig)}</s> <b class="bd nw" style="position:static">-${p.d}%</b>`:''}</p>
 <p>${x(`A ${ST[p.st][0].toLowerCase()} ${sub(p).en.toLowerCase()} piece from our ${C[p.ci][0]} range. Sample product for a fictional store.`,`قطعة ${ST[p.st][1]} من فئة ${sub(p).ar} ضمن ${C[p.ci][1]}. منتج تجريبي لمتجر خيالي.`)}</p>
 <p>${x('Color','اللون')}: ${p.col.map(k=>`<span class="sw${k==S.col?' on':''}" title="${CL[k][0]}" style="background:${CL[k][2]}" onclick="S.col=${k};render()"></span>`).join('')} ${x(CL[S.col][0],CL[S.col][1])}</p>
 ${p.sz.length?`<p>${x('Size','المقاس')}: ${p.sz.map(s=>`<span class="chip${S.size==s?' on':''}" onclick="S.size='${s}';render()">${s}</span>`).join('')}</p>`:''}
 <p class=q>${x('Qty','الكمية')}: <button onclick="S.q=Math.max(1,S.q-1);render()">−</button> <b>${S.q}</b> <button onclick="S.q=Math.min(10,S.q+1);render()">+</button></p>
-<p>${p.ok?'✅ '+x('In stock','متوفر'):'❌ '+x('Sold out','نفذ'))}</p>
+<p>${p.ok?'✅ '+x('In stock','متوفر'):'❌ '+x('Sold out','نفذ')}</p>
 <button class=btn ${p.ok?'':'disabled'} onclick="addC()">🛍 ${x('Add to bag','أضف للحقيبة')}</button> <button class="btn k" onclick="tw(${p.id})">${wish.includes(p.id)?'♥':'♡'} ${x('Wishlist','المفضلة')}</button>
 <p class=note>★ ${p.rt} (${p.rc}) — ${x('Simulated sample rating, not real reviews.','تقييم تجريبي محاكى وليس مراجعات حقيقية.')}</p></div></div>
 ${sec(x('Related','منتجات مشابهة'),rel)}${rv.length?sec(x('Recently viewed','شاهدتها مؤخراً'),rv):''}`}
@@ -165,9 +186,10 @@ return `<div class=pad><h2>📦 ${o.id}</h2><p class=note>⚠️ ${x('Fictional 
 <p><button class=btn onclick="F=F0();go('list')">${x('Back to shopping','العودة للتسوق')}</button> <button class="btn k" onclick="go('orders')">${x('Order history','سجل الطلبات')}</button></p></div>`}
 function vOrd(){return `<div class=pad><h2>${x('Order history','سجل الطلبات')}</h2><p class=note>${x('Saved on this device only (browser storage). Not a secure account.','محفوظ على هذا الجهاز فقط (تخزين المتصفح). ليس حساباً آمناً.')}</p>${orders.length?orders.map(o=>`<div class=box><div class=row><b>${o.id}</b><span>${new Date(o.date).toLocaleDateString(lang)}</span></div>${o.items.map(i=>`<div>${i.e} ${x(i.n[0],i.n[1])} ×${i.q}</div>`).join('')}<div class=row><span>📍 ${x(o.d.c[0]+', '+o.d.k[0],o.d.c[1]+'، '+o.d.k[1])}</span><b>${f(o.t)}</b></div><button class=btn onclick="go('track','${o.id}')">${x('Track','تتبّع')}</button></div>`).join(''):`<div class=box>${x('No orders yet.','لا توجد طلبات بعد.')}</div>`}</div>`}
 function vWish(){return `<div class=pad><h2>♡ ${x('Wishlist','المفضلة')}</h2></div>${wish.length?grid(wish.filter(i=>P[i]).map(i=>P[i])):`<div class=box>${x('Your wishlist is empty.','مفضلتك فارغة.')}</div>`}`}
+function navs(){$('#top').innerHTML+=`<div class=nav><a class="${view=='home'?'on':''}" onclick="go('home')">${x('Home','الرئيسية')}</a>${C.map((c,i)=>`<a class="${view=='list'&&F.cat==i?'on':''}" onclick="catgo(${i})">${x(c[0],c[1])}</a>`).join('')}</div>`;$('#bn').innerHTML=`<button onclick="go('home')"><span>🏠</span>${x('Home','الرئيسية')}</button><button onclick="catgo(null)"><span>☰</span>${x('Shop','التسوق')}</button><button onclick="go('wish')"><span>♡</span>${x('Wishlist','المفضلة')}</button><button onclick="go('cart')"><span>🛍</span>${x('Bag','الحقيبة')}${cq()?' ('+cq()+')':''}</button><button onclick="go('orders')"><span>👤</span>${x('Me','حسابي')}</button>`}
 function render(){const y=scrollY;document.documentElement.lang=lang;document.documentElement.dir=lang=='ar'?'rtl':'ltr';
 try{$('#top').innerHTML=`<div class=ann>${x('SHOP EVERYTHING. EXPECT NOTHING.','تسوّق كل شيء. توقّع لا شيء.')} · ${x('Code','كود')} <b>SNC10</b></div><div class=hd><a class=lg onclick="go('home')">SHEIN <i>NEVER</i> COMES</a><div class=sr><input id=q aria-label="search" placeholder="${x('Search products…','ابحث عن منتج…')}" value="${F.q.replace(/"/g,'&quot;')}" onkeydown="if(event.key=='Enter')srch(this.value)"><button aria-label="search" onclick="srch($('#q').value)">🔍</button></div><div class=ic><button onclick="setLang()">${x('عربي','EN')}</button><button aria-label="wishlist" onclick="go('wish')">♡${wish.length||''}</button><button aria-label="bag" onclick="go('cart')">🛍${cq()||''}</button><button aria-label="orders" onclick="go('orders')">👤</button></div></div>`;
-$('#app').innerHTML=({home:vHome,list:vList,p:vProd,cart:vCart,co:vCo,orders:vOrd,wish:vWish,track:vTrack})[view]()}catch(e){$('#app').innerHTML=`<div class=box>⚠️ ${x('Something went wrong.','حدث خطأ.')} <button class=btn onclick="view='home';render()">${x('Home','الرئيسية')}</button></div>`}
+navs();$('#app').innerHTML=({home:vHome,list:vList,p:vProd,cart:vCart,co:vCo,orders:vOrd,wish:vWish,track:vTrack})[view]()}catch(e){$('#app').innerHTML=`<div class=box>⚠️ ${x('Something went wrong.','حدث خطأ.')} <button class=btn onclick="view='home';render()">${x('Home','الرئيسية')}</button></div>`}
 $('#ft').innerHTML=`<b style="color:var(--p)">SHEIN NEVER COMES</b><br>${x('Independent fictional project, not affiliated with SHEIN. Products, prices, ratings and sales are sample data; images are generic illustrations (no people). Orders, payments and tracking are simulated; data lives in this browser only.','مشروع خيالي مستقل وغير مرتبط بـ SHEIN. المنتجات والأسعار والتقييمات بيانات تجريبية، والصور رسوم توضيحية عامة (بدون أشخاص). الطلبات والدفع والتتبع محاكاة والبيانات محفوظة في هذا المتصفح فقط.')} · ${P.length} ${x('sample products','منتج تجريبي')}`;scrollTo(0,y)}
 setInterval(()=>{const e=$('#cd');if(!e)return;const s=Math.floor((end()-Date.now())/1e3);if(s<=0)return render();e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(v=>String(v).padStart(2,'0')).join(':')},1000);
 render();
